@@ -11,5 +11,6 @@
   x = utils::getFromNamespace("mlr_learners", ns = "mlr3")
 
   # add the learner to the dictionary
-  x$add("classif.randomForest", LearnerClassifH2ODeeplearning)
+  x$add("classif.h2odeeplearning", LearnerClassifH2ODeeplearning)
+  x$add("regr.h2odeeplearning", LearnerRegrH2ODeeplearning)
 } # nocov end
