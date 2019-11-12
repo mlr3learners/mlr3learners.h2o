@@ -103,7 +103,7 @@ LearnerRegrH2ODeeplearning = R6Class("LearnerRegrH2ODeeplearning", inherit = Lea
         feature_types = c("integer", "numeric", "factor"),
         predict_types = "response",
         param_set = ps,
-        properties = c("weights", "missings")
+        properties = c("weights", "missings", "importance")
       )
     },
 
@@ -134,6 +134,13 @@ LearnerRegrH2ODeeplearning = R6Class("LearnerRegrH2ODeeplearning", inherit = Lea
       p = invoke(predict, self$model, newdata = newdata, type = type)
 
       PredictionRegr$new(task = task, response = as.vector(p$predict))
+    },
+
+    importance = function() {
+      imp = na.omit(as.data.frame(h2o::h2o.varimp(self$model)))
+      res = imp$relative_importance
+      names(res) = imp$variable
+      res
     }
   )
 )

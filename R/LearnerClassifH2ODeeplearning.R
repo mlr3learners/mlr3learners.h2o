@@ -100,7 +100,7 @@ LearnerClassifH2ODeeplearning = R6Class("LearnerClassifH2ODeeplearning", inherit
         feature_types = c("integer", "numeric", "factor"),
         predict_types = c("response", "prob"),
         param_set = ps,
-        properties = c("weights", "twoclass", "multiclass", "missings")
+        properties = c("weights", "twoclass", "multiclass", "missings", "importance")
       )
     },
 
@@ -138,7 +138,14 @@ LearnerClassifH2ODeeplearning = R6Class("LearnerClassifH2ODeeplearning", inherit
         colnames(p) = lvls
 
         PredictionClassif$new(task = task, prob = p)
-        }
+      }
+    },
+
+    importance = function() {
+      imp = na.omit(as.data.frame(h2o::h2o.varimp(self$model)))
+      res = imp$relative_importance
+      names(res) = imp$variable
+      res
     }
   )
 )
