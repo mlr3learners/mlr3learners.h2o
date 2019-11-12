@@ -7,7 +7,7 @@
 #' A [mlr3::LearnerClassif] for a deeplearning classification implemented in [h2o::h2o.deeplearning()] in package \CRANpkg{h2o}.
 #'
 #' @export
-LearnerClassifH2ODeeplearning = R6Class("H2ODeeplearning", inherit = LearnerClassif,
+LearnerClassifH2ODeeplearning = R6Class("LearnerClassifH2ODeeplearning", inherit = LearnerClassif,
   public = list(
     initialize = function() {
       ps = ParamSet$new(
@@ -24,12 +24,12 @@ LearnerClassifH2ODeeplearning = R6Class("H2ODeeplearning", inherit = LearnerClas
           # pretrained_autoencoder
           # overwrite_with_best_model
           ParamLgl$new("use_all_factor_level", default = TRUE, tags = "train"),
-          # standardize
+          ParamLgl$new("standardize", default = TRUE, tags = "train"),
           ParamFct$new("activation", levels = c("Rectifier", "Tanh", "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"), default = "Rectifier", tags = "train"),
           ParamUty$new("hidden", default = c(200L, 200L), tags = "train"),
           ParamDbl$new("epochs", default = 10L, lower = 1, tags = "train"),
           ParamInt$new("train_samples_per_iteration", default = -2, lower = -2, tags = "train"),
-          # target_ratio_comm_to_comp
+          ParamDbl$new("target_ratio_comm_to_comp", default = 0.05, tags = "train"),
           ParamInt$new("seed", default = -1, tags = "train"),
           ParamLgl$new("adaptive_rate", default = TRUE, tags = "train"),
           ParamDbl$new("rho", default = 0.99, lower = 0, tags = "train"),
@@ -51,7 +51,7 @@ LearnerClassifH2ODeeplearning = R6Class("H2ODeeplearning", inherit = LearnerClas
           # initial_weights
           # initial_bias
           ParamFct$new("loss", levels = c("Automatic", "CrossEntropy", "Quadratic", "Absolute", "Huber"), default = "Automatic", tags = "train"),
-          # distribution
+          ParamFct$new("distribution", levels = c("AUTO", "bernoulli", "multinomial"), default = "AUTO", tags = "train"),
           # quantile_alpha
           # tweedie_power
           # huber_alpha
@@ -80,8 +80,8 @@ LearnerClassifH2ODeeplearning = R6Class("H2ODeeplearning", inherit = LearnerClas
           # max_categorical_features
           ParamLgl$new("reproducible", default = FALSE, tags = "train"),
           ParamLgl$new("export_weights_and_biases", default = FALSE, tags = "train"),
-          # min_batch_size
-          # categorical_encoding
+          ParamInt$new("mini_batch_size", default = 1, tags = "train"),
+          ParamFct$new("categorical_encoding", levels = c("AUTO", "Enum", "OneHotInternal", "OneHotExplicit", "Binary", "Eigen", "LabelEncoder", "SortByResponse", "EnumLimited"), default = "AUTO", tags = "train"),
           ParamLgl$new("elastic_averaging", default = FALSE, tags = "train"),
           ParamDbl$new("elastic_averaging_moving_rate", default = 0.9, tags = "train"),
           ParamDbl$new("elastic_averaging_regularization", default = 0.001, tags = "train"),
@@ -97,7 +97,7 @@ LearnerClassifH2ODeeplearning = R6Class("H2ODeeplearning", inherit = LearnerClas
       super$initialize(
         id = "classif.h2odeeplearning",
         packages = "h2o",
-        feature_types = c("integer" ,"numeric", "factor"),
+        feature_types = c("integer", "numeric", "factor"),
         predict_types = c("response", "prob"),
         param_set = ps,
         properties = c("weights", "twoclass", "multiclass", "missings")
