@@ -4,9 +4,10 @@
 \name{mlr3learners.h2o-package}
 \alias{mlr3learners.h2o}
 \alias{mlr3learners.h2o-package}
-\title{mlr3learners.h2o: Various learners from h2o package for mlr3}
+\title{mlr3learners.h2o: Learners from h2o package for mlr3}
 \description{
-Various learners from h2o package for mlr3.
+Adds `h2o.deeplearning()` from the h2o package to
+    mlr3.
 }
 \author{
 \strong{Maintainer}: Marc Becker \email{marcbecker@posteo.de}
