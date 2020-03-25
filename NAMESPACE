@@ -2,9 +2,11 @@
 
 export(LearnerClassifH2ODeeplearning)
 export(LearnerClassifH2OGBM)
+export(LearnerClassifH2OGLM)
 export(LearnerClassifH2ORandomForest)
 export(LearnerRegrH2ODeeplearning)
 export(LearnerRegrH2OGBM)
+export(LearnerRegrH2OGLM)
 export(LearnerRegrH2ORandomForest)
 import(data.table)
 import(mlr3misc)
