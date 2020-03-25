@@ -14,6 +14,7 @@ register_mlr3 = function(libname, pkgname) {
   x$add("classif.h2odeeplearning", LearnerClassifH2ODeeplearning)
   x$add("regr.h2odeeplearning", LearnerRegrH2ODeeplearning)
   x$add("classif.h2orandomforest", LearnerClassifH2ORandomForest)
+  x$add("regr.h2orandomforest", LearnerRegrH2ORandomForest)
 }
 
 .onLoad = function(libname, pkgname) {

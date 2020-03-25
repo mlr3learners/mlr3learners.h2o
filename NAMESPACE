@@ -3,6 +3,7 @@
 export(LearnerClassifH2ODeeplearning)
 export(LearnerClassifH2ORandomForest)
 export(LearnerRegrH2ODeeplearning)
+export(LearnerRegrH2ORandomForest)
 import(data.table)
 import(mlr3misc)
 import(paradox)
