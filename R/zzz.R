@@ -13,6 +13,7 @@ register_mlr3 = function(libname, pkgname) {
   # add the learner to the dictionary
   x$add("classif.h2odeeplearning", LearnerClassifH2ODeeplearning)
   x$add("regr.h2odeeplearning", LearnerRegrH2ODeeplearning)
+  x$add("classif.h2orandomforest", LearnerClassifH2ORandomForest)
 }
 
 .onLoad = function(libname, pkgname) {
