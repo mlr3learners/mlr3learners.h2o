@@ -3,9 +3,9 @@
 \name{mlr_learners_regr.h2odeeplearning}
 \alias{mlr_learners_regr.h2odeeplearning}
 \alias{LearnerRegrH2ODeeplearning}
-\title{Regression H2O Deep Learning Learner}
+\title{H2O Deep Learning Regression Learner}
 \description{
-Regression feed-forward multilayer artificial neural network learner.
+Feed-forward multilayer artificial neural network regression learner.
 Class \code{\link[h2o:h2o.deeplearning]{h2o::h2o.deeplearning()}} from package \CRANpkg{h2o}.
 }
 \section{Dictionary}{
