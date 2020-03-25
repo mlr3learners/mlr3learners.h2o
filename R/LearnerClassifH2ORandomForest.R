@@ -12,7 +12,7 @@
 #' @export
 #' @template seealso_learner
 #' @template example
-LearnerClassifH2ORandomForest = R6Class("LearnerRandomForest",
+LearnerClassifH2ORandomForest = R6Class("LearnerClassifRandomForest",
   inherit = LearnerClassif,
   public = list(
 
@@ -86,6 +86,7 @@ LearnerClassifH2ORandomForest = R6Class("LearnerRandomForest",
       predict_types = c("response", "prob"),
       param_set = ps,
       properties = c("weights", "twoclass", "multiclass", "missings"),
+      man = "mlr3learners.h2o::mlr_learners_classif.h2orandomforest"
     )
   }
   ),
