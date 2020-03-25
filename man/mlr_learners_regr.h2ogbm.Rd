@@ -3,9 +3,9 @@
 \name{mlr_learners_regr.h2ogbm}
 \alias{mlr_learners_regr.h2ogbm}
 \alias{LearnerRegrH2OGBM}
-\title{Regression Gradient Boosting Tree Learner}
+\title{Gradient Boosting Tree Regression Learner}
 \description{
-Regression gradient boosting tree learner
+Gradient boosting tree regression learner.
 Class \code{\link[h2o:h2o.gbm]{h2o::h2o.gbm()}} from package \CRANpkg{h2o}.
 }
 \section{Dictionary}{

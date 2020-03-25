@@ -1,9 +1,9 @@
-#' @title Regression Gradient Boosting Tree Learner
+#' @title Gradient Boosting Tree Regression Learner
 #'
 #' @name mlr_learners_regr.h2ogbm
 #'
 #' @description
-#' Regression gradient boosting tree learner
+#' Gradient boosting tree regression learner.
 #' Class [h2o::h2o.gbm()] from package \CRANpkg{h2o}.
 #'
 #' @templateVar id regr.h2ogbm

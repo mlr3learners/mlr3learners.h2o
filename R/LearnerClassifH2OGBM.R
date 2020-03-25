@@ -1,9 +1,9 @@
-#' @title Classification Gradient Boosting Tree Learner
+#' @title  Gradient Boosting Tree Classification Learner
 #'
 #' @name mlr_learners_classif.h2ogbm
 #'
 #' @description
-#' Classification gradient boosting tree learner
+#' Gradient boosting tree classification learner
 #' Class [h2o::h2o.gbm()] from package \CRANpkg{h2o}.
 #'
 #' @templateVar id classif.h2ogbm
