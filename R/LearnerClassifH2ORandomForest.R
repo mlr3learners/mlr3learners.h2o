@@ -131,6 +131,11 @@ LearnerClassifH2ORandomForest = R6Class("LearnerClassifRandomForest",
       feature = task$feature_names
       data = task$data()
 
+      if ("weights" %in% task$properties) {
+        data$.mlr_weights = task$weights$weight
+        pars$weights_column = ".mlr_weights"
+      }
+
       training_frame = h2o::as.h2o(data)
       invoke(h2o::h2o.randomForest, y = target, x = feature,
         training_frame = training_frame, .args = pars)
