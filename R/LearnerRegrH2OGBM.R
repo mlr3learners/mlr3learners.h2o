@@ -4,7 +4,7 @@
 #'
 #' @description
 #' Regression gradient boosting tree learner
-#' Class [h2o::h2o.randomForest()] from package \CRANpkg{h2o}.
+#' Class [h2o::h2o.gbm()] from package \CRANpkg{h2o}.
 #'
 #' @templateVar id regr.h2ogbm
 #' @template section_dictionary_learner
@@ -21,10 +21,25 @@ LearnerRegrH2OGBM = R6Class("LearnerRegrH2OGBM",
     initialize = function() {
       ps = ParamSet$new(
         params = list(
+          # x
+          # y
+          # traning_frame
+          # model_id
+          # validation_frame
+          # nfolds
+          # keep_cross_validation_models
+          # keep_cross_validation_predictions
+          # keep_cross_validation_fold_assignment
+          # score_each_iteration
+          # score_tree_interval
+          # fold_assignment
+          # fold_column
           ParamLgl$new("ignore_const_cols", default = TRUE, tags = "train"),
-          ParamDbl$new("max_after_balance_size", default = 5, tags = "train"),
-          ParamInt$new("max_hit_ratio_k", lower = 0, default = 0,
-            tags = "train"),
+          # offset_column
+          # weights_column - Implemented in .train
+          # balance_classes
+          # max_after_balance_size
+          # max_hit_ratio_k
           ParamInt$new("ntrees", lower = 1L, default = 50L, tags = "train"),
           ParamInt$new("max_depth", lower = 1L, default = 5L, tags = "train"),
           ParamInt$new("min_rows", lower = 1L, default = 10L, tags = "train"),
@@ -33,11 +48,14 @@ LearnerRegrH2OGBM = R6Class("LearnerRegrH2OGBM",
             tags = "train"),
           ParamInt$new("nbins_cats", lower = 1L, default = 1024L,
             tags = "train"),
+          # r2_stopping - Deprecated
           ParamInt$new("stopping_rounds", default = 5L, lower = 0L,
             tags = "train"),
           ParamFct$new("stopping_metric",
             levels = c("AUTO", "deviance", "MSE", "RMSE", "MAE", "RMSLE",
             "custom", "custom_increasing"), tags = "train"),
+          # stopping_metric - Only classification "logloss", "AUC", "AUCPR",
+          # "lift_top_group", "misclassification", "mean_per_class_error"
           ParamDbl$new("stopping_tolerance", default = 0.001, lower = 0,
             tags = "train"),
           ParamInt$new("max_runtime_secs", lower = 0L, default = 0L,
@@ -51,6 +69,8 @@ LearnerRegrH2OGBM = R6Class("LearnerRegrH2OGBM",
           ParamFct$new("distribution", levels = c("AUTO", "gaussian", "poisson",
             "gamma", "tweedie", "laplace", "quantile", "huber", "custom"),
             default = "AUTO", tags = "train"),
+          # distribution - Only classification "bernoulli", "multinomial",
+          # "custom"
           ParamDbl$new("quantile_alpha", default = 0.5, lower = 0, upper = 1,
             tags = "train"),
           ParamDbl$new("tweedie_power", default = 1.5, lower = 1, upper = 2,
@@ -87,6 +107,7 @@ LearnerRegrH2OGBM = R6Class("LearnerRegrH2OGBM",
             tags = "train"),
           ParamLgl$new("check_constant_response", default = TRUE,
             tags = "train"),
+          ParamUty$new("monotone_constraints", default = NULL, tags = "train"),
           ParamLgl$new("verbose", default = FALSE, tags = "train")
         )
       )

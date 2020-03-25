@@ -4,7 +4,7 @@
 #'
 #' @description
 #' Classification gradient boosting tree learner
-#' Class [h2o::h2o.randomForest()] from package \CRANpkg{h2o}.
+#' Class [h2o::h2o.gbm()] from package \CRANpkg{h2o}.
 #'
 #' @templateVar id classif.h2ogbm
 #' @template section_dictionary_learner
@@ -21,12 +21,27 @@ LearnerClassifH2OGBM = R6Class("LearnerClassifH2OGBM",
     initialize = function() {
       ps = ParamSet$new(
         params = list(
+          # x
+          # y
+          # traning_frame
+          # model_id
+          # validation_frame
+          # nfolds
+          # keep_cross_validation_models
+          # keep_cross_validation_predictions
+          # keep_cross_validation_fold_assignment
+          # score_each_iteration
+          # score_tree_interval
+          # fold_assignment
+          # fold_column
           ParamLgl$new("ignore_const_cols", default = TRUE, tags = "train"),
+          # offset_column
+          # weights_column - Implemented in .train
           ParamLgl$new("balance_classes", default = FALSE, tags = "train"),
           ParamUty$new("class_sampling_factors", default = NULL,
             tags = "train"),
           ParamDbl$new("max_after_balance_size", default = 5, tags = "train"),
-          ParamInt$new("max_hit_ratio_k", lower = 0, default = 0,
+          ParamInt$new("max_hit_ratio_k", lower = 0L, default = 0L,
             tags = "train"),
           ParamInt$new("ntrees", lower = 1L, default = 50L, tags = "train"),
           ParamInt$new("max_depth", lower = 1L, default = 5L, tags = "train"),
@@ -36,12 +51,15 @@ LearnerClassifH2OGBM = R6Class("LearnerClassifH2OGBM",
             tags = "train"),
           ParamInt$new("nbins_cats", lower = 1L, default = 1024L,
             tags = "train"),
-          ParamInt$new("stopping_rounds", default = 5L, lower = 0L,
+          # r2_stopping - Deprecated
+          ParamInt$new("stopping_rounds", default = 0L, lower = 0L,
             tags = "train"),
           ParamFct$new("stopping_metric",
             levels = c("AUTO", "logloss", "AUC", "AUCPR", "lift_top_group",
               "misclassification", "mean_per_class_error", "custom",
               "custom_increasing"), tags = "train"),
+          # stopping_metric - Only regression "deviance", "MSE", "RMSE", "MAE",
+          # "RMSLE",
           ParamDbl$new("stopping_tolerance", default = 0.001, lower = 0,
             tags = "train"),
           ParamInt$new("max_runtime_secs", lower = 0L, default = 0L,
@@ -52,9 +70,10 @@ LearnerClassifH2OGBM = R6Class("LearnerClassifH2OGBM",
           ParamDbl$new("learn_rate", lower = 0, upper = 1, default = 0.1,
             tags = "train"),
           ParamDbl$new("learn_rate_annealing", default = 1, tags = "train"),
-          ParamFct$new("distribution", levels = c("AUTO", "bernoulli",
-            "quasibinomial", "multinomial", "custom"), default = "AUTO",
-            tags = "train"),
+          # distribution - Set to bernoulli or multinomial
+          # quantile_alpha
+          # tweedie_power
+          # huber_alpha
           ParamUty$new("checkpoint", default = NULL, tags = "train"),
           ParamUty$new("sample_rate_per_class", default = NULL, tags = "train"),
           ParamDbl$new("sample_rate", lower = 0, upper = 1, default = 1,
@@ -84,6 +103,7 @@ LearnerClassifH2OGBM = R6Class("LearnerClassifH2OGBM",
           ParamUty$new("custom_metric_func", default = NULL, tags = "train"),
           ParamUty$new("export_checkpoints_dir", default = NULL,
             tags = "train"),
+          ParamUty$new("monotone_constraints", default = NULL, tags = "train"),
           ParamLgl$new("check_constant_response", default = TRUE,
             tags = "train"),
           ParamLgl$new("verbose", default = FALSE, tags = "train")
@@ -109,7 +129,6 @@ LearnerClassifH2OGBM = R6Class("LearnerClassifH2OGBM",
   private = list(
 
     .train = function(task) {
-
       conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) {
         return(FALSE)
       })
@@ -117,12 +136,21 @@ LearnerClassifH2OGBM = R6Class("LearnerClassifH2OGBM",
         h2o::h2o.init()
       }
 
-      # Add weights
-
       pars = self$param_set$get_values(tags = "train")
       target = task$target_names
       feature = task$feature_names
       data = task$data()
+
+      if ("twoclass" %in% task$properties) {
+        pars$distribution = "bernoulli"
+      } else {
+        pars$distribution = "multinomial"
+      }
+
+      if ("weights" %in% task$properties) {
+        data$.mlr_weights = task$weights$weight
+        pars$weights_column = ".mlr_weights"
+      }
 
       training_frame = h2o::as.h2o(data)
       invoke(h2o::h2o.gbm, y = target, x = feature,

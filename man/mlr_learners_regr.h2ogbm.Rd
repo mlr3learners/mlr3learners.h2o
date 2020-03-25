@@ -6,7 +6,7 @@
 \title{Regression Gradient Boosting Tree Learner}
 \description{
 Regression gradient boosting tree learner
-Class \code{\link[h2o:h2o.randomForest]{h2o::h2o.randomForest()}} from package \CRANpkg{h2o}.
+Class \code{\link[h2o:h2o.gbm]{h2o::h2o.gbm()}} from package \CRANpkg{h2o}.
 }
 \section{Dictionary}{
 
