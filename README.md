@@ -1,47 +1,25 @@
-# mlr3learnertemplate
+# mlr3learners.h2o
 
-[![Build Status](https://travis-ci.org/mlr-org/mlr3learnertemplate.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3learnertemplate)
+<!-- badges: start -->
 
-This packages provides a template for adding new learners for [mlr3](https://mlr3.mlr-org.com).
+[![R CMD Check via {tic}](https://img.shields.io/github/workflow/status/mlr3learners/mlr3learners.h2o/R%20CMD%20Check%20via%20%7Btic%7D?logo=github&label=R%20CMD%20Check%20via%20{tic}&style=flat-square)](https://github.com/mlr3learners/mlr3learners.h2o/actions)
+[![codecov](https://codecov.io/gh/mlr3learners/mlr3learners.h2o/branch/master/graph/badge.svg)](https://codecov.io/gh/mlr3learners/mlr3learners.h2o)
+[![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 
-Creating the actual learners is covered in the [mlr3book](https://mlr3book.mlr-org.com/extending-mlr3.html).
-This package serves as a starting point for learners to share with others.
+<!-- badges: end -->
 
+Adds `h2o.deeplearning()` from the {h2o} package to {mlr3}.
 
-# Instructions
-
-This repository is a minimal working package with the randomForest learner.
-Fork this repository and adapt the code to your learner.
-
-## Rename Files
-Rename the following files to suit your learner:
-
-- `R/LearnerClassifRandomForest.R`
-- `tests/testthat/test_classif_randomForest.R`
-
-(For regression use the prefix "Regr" instead of "Classif". For example learners see https://github.com/mlr-org/mlr3learners)
-
-## Edit `R/Learner[YourLearner].R`
-
-- Adapt the documentation to suit your learner.
-- Adapt names and the package, learner properties, etc.
-  This is outlined in the [book](https://mlr3book.mlr-org.com/extending-mlr3.html)
-- Adapt `R/zzz.R`. The code in the `.onLoad` function is executed on package load and adds the learner to the `mlr_learners` dictionary.
-
-## Test Your Learner
-If you run `devtools::load_all()` the function `run_autotest()` is available in your global environment.
-The autotest query the learner for its properties to create a custom test suite of tasks for it.
-Make sure that **at least** the following is executed in the unit test `tests/testthat/test_classif_your_learner.R` (adept names to your learner):
+Install the latest release of the package via 
 
 ```r
-learner = LearnerClassifRanger$new()
-expect_learner(learner)
-result = run_autotest(learner)
-expect_true(result, info = result$error)
+install.packages("mlr3learners.h2o")
 ```
 
-## Check your package
-If this runs, your learner should be fine:
+by following the instructions in the [mlr3learners.drat README](https://github.com/mlr3learners/mlr3learners.drat).
+
+Alternatively, you can install the latest version of {mlr3learners.h2o} from Github with:
+
 ```r
-devtools::check()
+remotes::install_github("mlr3learners/mlr3learners.h2o")
 ```
