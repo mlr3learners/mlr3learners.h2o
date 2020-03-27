@@ -64,7 +64,7 @@ LearnerClassifH2OGBM = R6Class("LearnerClassifH2OGBM",
             tags = "train"),
           ParamInt$new("max_runtime_secs", lower = 0L, default = 0L,
             tags = "train"),
-          # seed
+          ParamInt$new("seed", default = -1, tags = "train"),
           ParamLgl$new("build_tree_one_node", default = FALSE,
             tags = "train"),
           ParamDbl$new("learn_rate", lower = 0, upper = 1, default = 0.1,

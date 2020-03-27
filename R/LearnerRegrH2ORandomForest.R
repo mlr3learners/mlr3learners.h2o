@@ -62,7 +62,7 @@ LearnerRegrH2ORandomForest = R6Class("LearnerRegrRandomForest",
             tags = "train"),
           ParamInt$new("max_runtime_secs", lower = 0L, default = 0L,
             tags = "train"),
-          # seed
+          ParamInt$new("seed", default = -1, tags = "train"),
           ParamLgl$new("build_tree_one_node", default = FALSE,
             tags = "train"),
           ParamInt$new("mtries", lower = -1L, default = -1L,

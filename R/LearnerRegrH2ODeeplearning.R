@@ -58,7 +58,7 @@ LearnerRegrH2ODeeplearning = R6Class("LearnerRegrH2ODeeplearning",
             special_vals = list(-2L, -1L, 0L), default = -2L, tags = "train"),
           ParamDbl$new("target_ratio_comm_to_comp", default = 0.05,
             tags = "train"),
-          # seed
+          ParamInt$new("seed", default = -1, tags = "train"),
           ParamLgl$new("adaptive_rate", default = TRUE, tags = "train"),
           ParamDbl$new("rho", default = 0.99, lower = 0, tags = "train"),
           ParamDbl$new("epsilon", default = 1e-08, lower = .Machine$double.eps,

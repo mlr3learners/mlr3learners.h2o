@@ -27,7 +27,7 @@ LearnerClassifH2OGLM = R6Class("LearnerClassifH2OGLM",
           # model_id
           # validation_frame
           # nfolds
-          # seed
+          ParamInt$new("seed", default = -1, tags = "train"),
           # keep_cross_validation_models
           # keep_cross_validation_predictions
           # keep_cross_validation_fold_assignment
